@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+            <h3>Student Details</h3>
+            <div class="form-group mb-3">
+                <label for="name">Name</label>
+                <input type="text" id="name" formControlName="name" class="form-control">
+                <div *ngIf="dataForm.get('name')?.invalid && (dataForm.get('name')?.dirty || dataForm.get('name')?.touched)"
+                    class="text-danger">
+                    <div *ngIf="dataForm.get('name')?.errors?.['required']">
+                        Name is required.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="roll">Roll</label>
+                <input type="text" id="roll" formControlName="roll" class="form-control">
+                <div *ngIf="dataForm.get('roll')?.invalid && (dataForm.get('roll')?.dirty || dataForm.get('roll')?.touched)"
+                    class="text-danger">
+                    <div *ngIf="dataForm.get('roll')?.errors?.['required']">
+                        Roll is required.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="address">Address</label>
+                <input type="text" id="address" formControlName="address" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+                <label for="grade">Grade</label>
+                <input type="number" id="grade" formControlName="grade" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+                <label for="courses">Courses</label>
+                <select id="courses" formControlName="courses" class="form-control" multiple>
+                    <option value="">Select Course</option>
+                    @for (course of courseList; track course) {
+                    <option [value]="course.id">{{course.name}}</option>
+                    }
+                </select>
+            </div>
+            <div formGroupName="dept">
+                <div class="form-group mb-3">
+                    <label for="dept_id">Department</label>
+                    <select id="dept_id" formControlName="id" class="form-control">
+                        <option value="">Select Department</option>
+                        @for (dept of deptList; track dept) {
+                        <option [value]="dept.id">{{dept.name}}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <h3>User Details</h3>
+            <div formGroupName="user">
+                <div class="form-group mb-3">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" formControlName="username" class="form-control">
+                    <div *ngIf="dataForm.get('username')?.invalid && (dataForm.get('username')?.dirty || dataForm.get('username')?.touched)"
+                        class="text-danger">
+                        <div *ngIf="dataForm.get('username')?.errors?.['required']">
+                            Username is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" formControlName="email" class="form-control">
+                    <div *ngIf="dataForm.get('email')?.invalid && (dataForm.get('email')?.dirty || dataForm.get('email')?.touched)"
+                        class="text-danger">
+                        <div *ngIf="dataForm.get('email')?.errors?.['required']">
+                            Email is required.
+                        </div>
+                        <div *ngIf="dataForm.get('email')?.errors?.['email']">
+                            Invalid email
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" formControlName="password" class="form-control" required>
+                    <div *ngIf="dataForm.get('password')?.invalid && (dataForm.get('password')?.dirty || dataForm.get('password')?.touched)"
+                        class="text-danger">
+                        <div *ngIf="dataForm.get('password')?.errors?.['required']">
+                            Username is required.
+                        </div>
+                        <div *ngIf="dataForm.get('password')?.errors?.['minLength']">
+                            Minimum 2 characters required
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary me-3">Submit</button>
+            <span>Already have an account? <a routerLink="/home/login">Login</a></span>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+:host {
+    .mat-icon {
+      vertical-align: middle;
+      margin-right: 1rem;
+    }
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: row;
+    column-gap: 20px;
+    padding-left: 1rem;
+    height: var(--mat-toolbar-standard-height);
+  }
+  .mat-divider {
+    border-top-width: 2px;
+    border-color: white;
+  }
+  .mat-list-item {
+    color: #fff !important;
+    font-size: 0.8rem;
+    height: 44px !important;
+    margin-bottom: 4px;
+    &:hover {
+      color: #f2f5f7 !important;
+    }
+    ::ng-deep {
+      .mat-list-item-content {
+        margin: 0 8px;
+        &:hover {
+          background: #1b57e2 !important;
+        }
+      }
+    }
+  }
+  .list-item-active {
+    // background: blue !important;
+    // border-radius: 0 2rem 2rem 0;
+    // &:hover {
+    //   background: blue;
+    // }
+  
+    color: #fff !important;
+    ::ng-deep {
+      .mat-list-item-content {
+        background: #2b4fa1 !important;
+        &:hover {
+          background: #234699 !important;
+        }
+      }
+    }
+  }
+  .mat-subheader {
+    color: #818cf8;
+    font-size: 0.6rem;
+    font-weight: 100;
+    letter-spacing: 1px;
+  }
+  
+// Tree styles
+  .sidenav-tree-invisible {
+    display: none;
+  }
+  
+  .sidenav-tree ul,
+  .sidenav-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+  
+  /*
+   * This padding sets alignment of the nested nodes.
+   */
+  .sidenav-tree .mat-nested-tree-node div[role=group] {
+    padding-left: 0;
+  }
+  
+  /*
+   * Padding for leaf nodes.
+   * Leaf nodes need to have padding so as to align with other non-leaf nodes
+   * under the same parent.
+   */
+  .sidenav-tree div[role=group] > .mat-tree-node {
+    padding-left: 0;
+  }
+  
+  .nav-link {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .nav-link:hover {
+    background-color: #1b57e279;
+  }
