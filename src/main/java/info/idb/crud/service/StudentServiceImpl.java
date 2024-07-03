@@ -8,6 +8,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -60,6 +63,17 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Response<List<Student>> findAll() {
         List<Student> students = studentRepository.findAll();
+        return new Response<>(ResponseStatus.SUCCESS, null, students);
+    }
+
+    @Override
+    public Response<Page<Student>> findAll(Pageable pageable, String searchKey) {
+        Page<Student> students;
+        if (searchKey == null || searchKey.equals("*")) {
+            students = studentRepository.findAll(pageable);
+        } else {
+            students = studentRepository.search(searchKey, pageable);
+        }
         return new Response<>(ResponseStatus.SUCCESS, null, students);
     }
 

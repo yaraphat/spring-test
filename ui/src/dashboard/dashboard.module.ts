@@ -25,6 +25,8 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { DashboardService } from './dashboard.service';
 import { StudentService } from './components/student/student.service';
 import { CourseService } from './components/course/course.service';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { CourseService } from './components/course/course.service';
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [provideHttpClient(withInterceptorsFromDi()), DashboardService, StudentService, CourseService]
 })

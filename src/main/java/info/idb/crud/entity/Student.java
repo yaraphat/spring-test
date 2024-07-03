@@ -32,12 +32,12 @@ public class Student extends BaseEntity {
     private String grade;
 
     // nested form
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private User user;
 
     // Dropdown multiple choice / Checkbox
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinTable(name = "student_courses", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses;
 
@@ -46,5 +46,19 @@ public class Student extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "department_id")
     private Department dept;
+
+    public Student() {
+        this.dept = null;
+    }
+
+    public Student(String name, String roll, String address, String grade, User user, List<Course> courses, Department dept) {
+        this.name = name;
+        this.roll = roll;
+        this.address = address;
+        this.grade = grade;
+        this.user = user;
+        this.courses = courses;
+        this.dept = dept;
+    }
 
 }

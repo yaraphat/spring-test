@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { apiUrl } from '../constants';
 import { Observable } from 'rxjs';
 import { Response } from '../model/Response';
+import { PageRequest } from '../model/PageRequest';
 
 @Injectable()
 export class DashboardService {
@@ -27,6 +28,10 @@ export class DashboardService {
 
   findAll(model: string): Observable<Response<any>> {
     return this.http.get<Response<any>>(`${apiUrl}/${model}`);
+  }
+
+  findInPage(model: string, pageRequest: PageRequest): Observable<Response<any>> {
+    return this.http.get<Response<any>>(`${apiUrl}/${model}/${pageRequest.getUrlPathString()}`);
   }
 
 }
