@@ -29,7 +29,7 @@ export interface Pageable {
     unpaged: boolean;
 }
 
-export const defaultPage = {
+export const defaultPage: Page<any> = {
     content: [],
     pageable: {
         pageNumber: 0,
