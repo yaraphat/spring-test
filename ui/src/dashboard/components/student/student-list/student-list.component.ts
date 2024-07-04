@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { DashboardService } from '../../../dashboard.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { PageRequest } from '../../../../model/PageRequest';
+import { PageRequest } from '../../../../model/page-request.model';
+import { Page, defaultPage } from '../../../../model/page.model';
+import { Response } from '../../../../model/response.model';
 
 @Component({
   selector: 'app-student-list',
@@ -9,16 +11,17 @@ import { PageRequest } from '../../../../model/PageRequest';
   styleUrl: './student-list.component.scss'
 })
 export class StudentListComponent {
-  studentList: any[] = [];
   displayedColumns: string[] = ['name', 'roll', 'address', 'grade', 'action'];
-  dataSource = new MatTableDataSource<any>(this.studentList);
+  dataSource = new MatTableDataSource<any>([]);
+  page: Page<any> = defaultPage;
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
     const params = new PageRequest(1, 10);
-    this.dashboardService.findInPage('student', params).subscribe(data => {
-      this.studentList = data.data;
+    this.dashboardService.findInPage('student', params).subscribe((data: Response<Page<any>>) => {
+      this.dataSource.data = data.data.content;
+      this.page = data.data;
     });
   }
 
@@ -27,6 +30,15 @@ export class StudentListComponent {
   }
   onEdit(studentId: number) {
     console.log('edit', studentId);
+  }
+
+  pageChanged(event: any) {
+    const params = new PageRequest(event.pageIndex, event.pageSize);
+    console.log(event);
+    this.dashboardService.findInPage('student', params).subscribe((data: Response<Page<any>>) => {
+      this.dataSource.data = data.data.content;
+      this.page = data.data;
+    });
   }
 
 }

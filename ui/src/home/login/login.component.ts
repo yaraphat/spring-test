@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HomeService } from '../home.service';
-import { Response, ResponseStatus } from '../../model/Response';
+import { Response, ResponseStatus } from '../../model/response.model';
 import { Router } from '@angular/router';
 
 @Component({

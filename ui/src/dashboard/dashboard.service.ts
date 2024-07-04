@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiUrl } from '../constants';
 import { Observable } from 'rxjs';
-import { Response } from '../model/Response';
-import { PageRequest } from '../model/PageRequest';
+import { Response } from '../model/response.model';
+import { PageRequest } from '../model/page-request.model';
+import { Page } from '../model/page.model';
 
 @Injectable()
 export class DashboardService {
@@ -30,8 +31,8 @@ export class DashboardService {
     return this.http.get<Response<any>>(`${apiUrl}/${model}`);
   }
 
-  findInPage(model: string, pageRequest: PageRequest): Observable<Response<any>> {
-    return this.http.get<Response<any>>(`${apiUrl}/${model}/${pageRequest.getUrlPathString()}`);
+  findInPage(model: string, pageRequest: PageRequest): Observable<Response<Page<any>>> {
+    return this.http.get<Response<Page<any>>>(`${apiUrl}/${model}/${pageRequest.getUrlPathString()}`);
   }
 
 }
