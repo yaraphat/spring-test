@@ -5,7 +5,6 @@ import { PageRequest } from '../../../../model/page-request.model';
 import { Page, defaultPage } from '../../../../model/page.model';
 import { Response } from '../../../../model/response.model';
 import { DashboardService } from '../../../dashboard.service';
-import { debounce } from '../../../util/concurrent.util';
 
 @Component({
   selector: 'app-student-list',
@@ -13,6 +12,9 @@ import { debounce } from '../../../util/concurrent.util';
   styleUrl: './student-list.component.scss'
 })
 export class StudentListComponent {
+
+  @ViewChild(MatSort) sort!: MatSort;
+
   displayedColumns: string[] = ['name', 'roll', 'address', 'grade', 'action'];
   dataSource = new MatTableDataSource<any>([]);
   page: Page<any> = defaultPage;
@@ -21,12 +23,19 @@ export class StudentListComponent {
 
   constructor(private dashboardService: DashboardService) { }
 
-  ngOnInit() {
-    const params = new PageRequest(1, 10);
+  fetchPage(pageNumber: number, pageSize: number) {
+    const params = new PageRequest(pageNumber, pageSize);
+    params.sortColumn = this.sort?.active;
+    params.order = this.sort?.direction;
+    params.search = this.filterText;
     this.dashboardService.findInPage('student', params).subscribe((data: Response<Page<any>>) => {
       this.dataSource.data = data.data.content;
       this.page = data.data;
     });
+  }
+
+  ngOnInit() {
+    this.fetchPage(0, 10);
   }
 
   onDelete(studentId: number) {
@@ -37,44 +46,20 @@ export class StudentListComponent {
   }
 
   pageChanged(event: any) {
-    const params = new PageRequest(event.pageIndex, event.pageSize);
-    params.search = this.filterText || '*';
-    params.sortColumn = this.sort.active;
-    params.order = this.sort.direction || 'asc';
-    this.dashboardService.findInPage('student', params).subscribe((data: Response<Page<any>>) => {
-      this.dataSource.data = data.data.content;
-      this.page = data.data;
-    });
+    this.fetchPage(event.pageIndex, event.pageSize);
   }
-
-  @ViewChild(MatSort) sort!: MatSort;
 
   onSortChange(sortState: Sort) {
-    const params = new PageRequest(1, this.page.size);
-    params.sortColumn = sortState.active;
-    params.order = sortState.direction || 'asc';
-    params.search = this.filterText || '*';
-    this.dashboardService.findInPage('student', params).subscribe((data: Response<Page<any>>) => {
-      this.dataSource.data = data.data.content;
-      this.page = data.data;
-    });
+    this.fetchPage(0, this.page.size);
   }
 
-  onSearch(event: any) {
+  onSearch() {
     if (this.timer) {
       clearTimeout(this.timer);
     }
     this.timer = setTimeout(() => {
-      const params = new PageRequest(1, this.page.size);
-      params.sortColumn = this.sort.active;
-      params.order = this.sort.direction || 'asc';
-      params.search = this.filterText || '*';
-      this.dashboardService.findInPage('student', params).subscribe((data: Response<Page<any>>) => {
-        this.dataSource.data = data.data.content;
-        this.page = data.data;
-      });
+      this.fetchPage(0, this.page.size);
     }, 500);
-
   }
 
 }

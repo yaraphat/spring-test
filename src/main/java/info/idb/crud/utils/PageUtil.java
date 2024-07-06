@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort.Direction;
 
 public class PageUtil {
     public static Pageable getPageable(Integer pageNumber, Integer pageSize, String sortColumn, String sortOrder) {
-        pageNumber = pageNumber == null ? 0 : pageNumber - 1;
+        pageNumber = pageNumber == null ? 0 : pageNumber;
         pageSize = pageSize == null ? 10 : pageSize;
         sortColumn = sortColumn == null ? "id" : sortColumn;
         sortOrder = sortOrder == null ? "ASC" : sortOrder.toUpperCase();

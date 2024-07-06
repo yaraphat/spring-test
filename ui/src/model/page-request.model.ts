@@ -6,7 +6,7 @@ export class PageRequest {
     order?: string;
 
     constructor(pageNumber: number, pageSize: number, sortColumn?: string, order?: string, search?: string) {
-        this.pageNumber = pageNumber || 1;
+        this.pageNumber = pageNumber || 0;
         this.pageSize = pageSize || 10;
         this.search = search || '*';
         this.sortColumn = sortColumn || 'id';
@@ -14,6 +14,6 @@ export class PageRequest {
     }
 
     getUrlPathString(): string {
-        return `${this.pageNumber}/${this.pageSize}/${this.sortColumn}/${this.order}/${this.search}`;
+        return `${this.pageNumber}/${this.pageSize}/${this.sortColumn || 'id'}/${this.order || 'asc'}/${this.search  || '*'}`;
     }
 }
